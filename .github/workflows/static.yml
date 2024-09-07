@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # or replace with your branch name if different
+      - main  # Replace with your branch name if different
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to v3
 
       - name: Build the site
         run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
@@ -27,4 +27,4 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
         with:
-          token: ${{ secrets.GH_TOKEN }}  # Use your GitHub token for private repositories
+          token: ${{ secrets.GH_TOKEN }}  # Only needed for private repositories
