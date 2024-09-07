@@ -1,0 +1,25 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # This means the workflow will run whenever you push to the 'main' branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build the site
+        run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
+
+      - name: Upload HTML file
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './index.html'
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
