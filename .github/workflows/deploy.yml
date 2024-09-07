@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # This means the workflow will run whenever you push to the 'main' branch
+      - main  # or replace with your branch name if different
 
 jobs:
   deploy:
@@ -16,7 +16,7 @@ jobs:
       - name: Build the site
         run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
 
-      - name: Upload HTML file
+      - name: Upload HTML file as artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: './index.html'
