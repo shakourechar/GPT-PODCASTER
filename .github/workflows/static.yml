@@ -1,28 +1,30 @@
-name: Deploy static content to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Set the branch you want to use (replace with the branch you're using)
+      - main  # or replace with your branch name if different
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # Ensure the workflow can push to the repo
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up GitHub Pages
-      uses: actions/setup-pages@v2
+      - name: Build the site
+        run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
 
-    - name: Build the site
-      run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
+      - name: Upload HTML file as artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './index.html'
 
-    - name: Deploy to GitHub Pages
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: './index.html'
-
-    - name: Deploy GitHub Pages
-      uses: actions/deploy-pages@v1
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+        with:
+          token: ${{ secrets.GH_TOKEN }}  # Use your GitHub token for private repositories
