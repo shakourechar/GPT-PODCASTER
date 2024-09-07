@@ -9,9 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # Ensure the workflow can push to the repo
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to v3 to avoid Node.js deprecation warnings
 
       - name: Build the site
         run: echo "<!DOCTYPE html><html><body><h1>My GitHub Pages Site</h1></body></html>" > index.html
@@ -23,3 +26,5 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v1
+        with:
+          token: ${{ secrets.GH_TOKEN }}  # Use your GitHub token for private repositories
